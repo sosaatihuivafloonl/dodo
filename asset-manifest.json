@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/dodo/static/css/main.d7b3425d.css",
+    "main.js": "/dodo/static/js/main.f852bdc8.js",
+    "static/media/categories.svg": "/dodo/static/media/categories.d826b283f210cbc5953a54fb1c1a1eb1.svg",
+    "static/media/favorite.svg": "/dodo/static/media/favorite.ab88a7cccc77a5a67b73f4e349ec5f74.svg",
+    "index.html": "/dodo/index.html",
+    "static/media/message.svg": "/dodo/static/media/message.2b4e694ffc02919c0523a54b1cf03aca.svg",
+    "static/media/edit.svg": "/dodo/static/media/edit.c0bff47902f73b1feeb79f9eab920826.svg",
+    "static/media/loader.svg": "/dodo/static/media/loader.054c919c58aebb35d2f21bc7b5c1a4cb.svg",
+    "main.d7b3425d.css.map": "/dodo/static/css/main.d7b3425d.css.map",
+    "main.f852bdc8.js.map": "/dodo/static/js/main.f852bdc8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7b3425d.css",
+    "static/js/main.f852bdc8.js"
+  ]
+}
