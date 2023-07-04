@@ -663,41 +663,7 @@ body {
 		position: relative;
 	}
 	
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio:before,
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio:after {
-		border-radius: 50%;
-		content: "";
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-	}
 	
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio:before {
-		border: 2px solid #57585a;
-		width: 20px;
-		height: 20px;
-		left: 0;
-		transition: border-color 0.5s ease;
-	}
-	
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio.active:after {
-		background: #008f79;
-		width: 12px;
-		height: 12px;
-		left: 4px;
-		transition: background 0.5s ease;
-	}
-	
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio:focus-within:before,
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio.active:before {
-		border-color: #008f79;
-		box-shadow: 0 0 0 4px #cce9e4;
-	}
-	
-	.main-field-center-body-info-delivery-wrapper-main-box-field-radio.active:after {
-		background: #008f79;
-		border-color: #008f79;
-	}
 
 	.main-field-center-body-info-delivery-wrapper-main-box-field-radio2 {
 		align-items: center;

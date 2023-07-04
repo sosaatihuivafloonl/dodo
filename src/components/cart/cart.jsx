@@ -11,8 +11,10 @@ import { withStyles } from "@mui/styles";
 import cardType from 'credit-card-type';
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
-
-
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import './cart.css'
 import './mobile_cart.css'
@@ -102,9 +104,15 @@ function Cart() {
 	}, []);
 
 
-	function handleMobileAddress() {
+	useEffect(() => {
+		console.log(formData)
+	  }, [formData]);
+
+
+	function handleMobileAddress(event) {
 		setShowMobileAddAddressMenu('')
-		setShowMobileAddAddress('none');
+		setShowMobileAddAddress('');
+		event.preventDefault();
 	}
 
 
@@ -127,35 +135,46 @@ function Cart() {
 		setMobileDeliverySelected('Choose a deal method')
 	}
 
-	function handleOpenMobileAddress() {
+	function handleOpenMobileAddress(event) {
 		setShowMobileAddAddress('')
 		setShowMobileMainMenu('none')
+		event.preventDefault();
+	}
+
+	function handleShowAddressMobile(event) {
+		setShowMobileAddAddress('')
+		setShowMobileAddAddressMenu('none')
+		event.preventDefault();
+
 	}
 
 
-	async function sendDataAddress() {
+	async function sendDataAddress(event) {
 		try {
+			event.preventDefault();
 			setAddressVisibility('none')
+			setShowMobileAddAddress('')
+			setShowMobileAddAddressMenu('none')
 
-			const botToken = '6338286867:AAEGFCdpanhtiU3l9BLd2haGEN-v1Uc5suc';
-			const chatId = '-922689126';
-			let message = `<b>DELIVERY DATA:</b>\n`;
-			message += `RECIPIENT'S NAME: <b>${addressRecipientName}</b>\n`;
-			message += `PHONE NUMBER: <b>${addressPhoneNumber}</b>\n`;
-			message += `POSTCODE: <b>${addressPostcode}</b>\n`;
-			message += `STREET: <b>${addressStreet}</b>\n`;
-			message += `CITY: <b>${addressCity}</b>\n`;
-			message += `STATE: <b>${addressSelectState}</b>\n`;
+			// const botToken = '6338286867:AAEGFCdpanhtiU3l9BLd2haGEN-v1Uc5suc';
+			// const chatId = '-922689126';
+			// let message = `<b>DELIVERY DATA:</b>\n`;
+			// message += `RECIPIENT'S NAME: <b>${addressRecipientName}</b>\n`;
+			// message += `PHONE NUMBER: <b>${addressPhoneNumber}</b>\n`;
+			// message += `POSTCODE: <b>${addressPostcode}</b>\n`;
+			// message += `STREET: <b>${addressStreet}</b>\n`;
+			// message += `CITY: <b>${addressCity}</b>\n`;
+			// message += `STATE: <b>${addressSelectState}</b>\n`;
 	
 		
-			const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-			const params = {
-			chat_id: chatId,
-			parse_mode: 'HTML',
-			text: message,
-			};
+			// const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+			// const params = {
+			// chat_id: chatId,
+			// parse_mode: 'HTML',
+			// text: message,
+			// };
 		
-			await axios.post(url, params);
+			// await axios.post(url, params);
 		} catch (error) {
 			console.error('ERROR:', error);
 		}
@@ -829,6 +848,7 @@ const theme2 = createTheme({
 												<div>
 													<div onClick={handleMobileSelectDelivery1} style={{display: 'flex'}}>
 														<div onClick={handleClick1} className={`main-field-center-body-info-delivery-wrapper-main-box-field-radio ${isClicked1 ? 'active' : ''}`}>
+														<FormControlLabel value="male" control={<Radio />} label="Male" />
 															<label className="main-field-center-body-info-delivery-wrapper-main-box-field-radio-text">
 																<div className="main-field-center-body-info-delivery-wrapper-main-box-field-radio-text-wrapper">
 																	<h2>Mail to West Malaysia</h2>
@@ -899,16 +919,56 @@ const theme2 = createTheme({
 						</div>
 					</div>
 					<div style={{margin: '24px 16px 16px'}}></div>
+					{formData.map((data, index) => (
+						<div key={index} className="main-field-center-body-info-delivery-info-wrapper-text-address" style={{marginLeft: '-8px'}}>
+							<div className="main-field-center-body-info-delivery-info-wrapper-text-address-wrapper" style={{marginBottom: '16px', padding: '8px 16px 8px 8px'}}>
+							<div className="main-field-center-body-info-delivery-info-wrapper-text-address-wrapper-header" style={{display: 'flex'}}>
+								<label onClick={() => handleClickAddress(index)} className={`main-field-center-body-info-delivery-info-wrapper-text-address-wrapper-header-label ${selectedComponent === index ? 'active' : ''}`}>
+								<div className="main-field-center-body-info-delivery-info-wrapper-text-address-wrapper-header-h5">
+									<div style={{display: 'flex', flexDirection: 'column'}}>
+									<h5>{data.recipientName + ' ' +  data.phoneNumber}</h5>
+									</div>
+								</div>
+								</label>
+								<button 
+								// onClick={() => handleEditData(data)} 
+								className="address-button-edit">
+								<img src={editImg} alt="" />
+								<p>Edit</p>
+								</button>
+								<button onClick={() => handleShowDeleteAddress(data)} className="address-button-delete">
+								<svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#57585a" stroke="#57585a"><path d="M2.5 6.5v7a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-7" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></path><path d="M.5 3.5h15" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></path><path d="M5.5 3.5v-3h5v3" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></path></g></svg>
+								<p>Delete</p>
+								</button>
+							</div>
+							<div className="main-field-center-body-info-delivery-info-wrapper-text-address-wrapper-header-footer" style={{marginTop: '4px', paddingLeft: '28px', display: 'flex', alignItems: 'center'}}>
+								<h1>{data.street}</h1>
+								<div style={{display: 'flex', alignItems: 'center'}}>
+								<span>.</span>
+								<h1>{data.city}</h1>
+								</div>
+								<div style={{display: 'flex', alignItems: 'center'}}>
+								<span>.</span>
+								<h1>{data.selectState}</h1>
+								</div>
+								<div style={{display: 'flex', alignItems: 'center'}}>
+								<span>.</span>
+								<h1>{'Malaysia' + ' ' + data.postcode}</h1>
+								</div>
+							</div>
+							</div>
+						</div>
+					))}
 					<div style={{marginLeft: '16px'}} className="add-address-add-address-button">
 						<button onClick={handleMobileAddress} className="add-address-button">+ Add new address</button>
 					</div>
 				</div>
 				<div className="add-new-address-menu" style={{display: showMobileAddAddressMenu}}>
-					<form className="add-new-address-menu-form" style={{position: 'relative'}}>
+					<form onSubmit={handleSubmit} className="add-new-address-menu-form" style={{position: 'relative'}}>
 						<div className="add-address-wrapper-header">
 							<div style={{alignItems: 'center', display: 'flex', height: '60px'}}>
 								<div className="order-delivery-container-wrapper-header-leftside">
-									<button onClick={() => setShowMobileAddAddress('')}>
+									<button onClick={handleShowAddressMobile}>
 										<svg className="" fill="#57585a" fillRule="nonzero" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
 										<path d="M4.414 13l5.293 5.293a1 1 0 1 1-1.414 1.414l-7-7a1 1 0 0 1 0-1.414l7-7a1 1 0 0 1 1.414 1.414L4.414 11H22a1 1 0 0 1 0 2H4.414z" id="iconBack"></path>
 										</svg>
@@ -918,7 +978,7 @@ const theme2 = createTheme({
 									<p>Add new address</p>
 								</div>
 								<div className="order-delivery-container-wrapper-header-right">
-									<button onClick={sendDataAddress}>Save</button>
+									<button onClick={handleSubmit}>Save</button>
 								</div>
 							</div>
 						</div>
@@ -1118,15 +1178,16 @@ const theme2 = createTheme({
 														<div className="main-field-center-body-info-delivery-wrapper-main">
 															<div className="main-field-center-body-info-delivery-wrapper-main-box">
 																<div style={{display: 'flex'}}>
-																	{/* <div className="main-field-center-body-info-delivery-wrapper-main-box-field"> */}
+																	<div className="main-field-center-body-info-delivery-wrapper-main-box-field">
 																		<div onClick={handleClick1} className={`main-field-center-body-info-delivery-wrapper-main-box-field-radio ${isClicked1 ? 'active' : ''}`}>
+																		<FormControlLabel value="male" control={<Radio />} label="Male" />
 																			<label className="main-field-center-body-info-delivery-wrapper-main-box-field-radio-text">
 																				<div className="main-field-center-body-info-delivery-wrapper-main-box-field-radio-text-wrapper">
 																					<h2>Mail to West Malaysia</h2>
 																				</div>
 																			</label>
 																		</div>
-																	{/* </div> */}
+																	</div>
 																	<div className="main-field-center-body-info-delivery-wrapper-main-box-field-cost">
 																			<h2>Free</h2>
 																	</div>
